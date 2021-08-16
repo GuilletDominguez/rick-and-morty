@@ -24,7 +24,7 @@ setup() {
     })
     onMounted(() => {
 
-        store.dispatch('getCharacters')
+        store.dispatch('nextPage')
         
     })
     return {

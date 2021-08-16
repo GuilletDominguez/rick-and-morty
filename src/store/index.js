@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-
+let indice = 0;
 export default createStore({
   state: {
     characters:[],
@@ -14,12 +14,14 @@ export default createStore({
     }
   },
   actions: {
+    
     async getCharacters({commit}){
       try{
-        const response = await fetch('https://rickandmortyapi.com/api/character')
+      
+        const response = await fetch('https://rickandmortyapi.com/api/character?page='+indice+'')
         const data = await response.json()
-       commit('setCharacters', data.results)
-       commit('setCharactersFilter', data.results)
+        commit('setCharacters', data.results)
+        commit('setCharactersFilter', data.results)
 
       } catch(error){
         console.error(error)
@@ -41,7 +43,58 @@ export default createStore({
         }
       })
       commit('setCharactersFilter', results)
-    }
+    },
+    nextPage({commit}){
+     
+        indice++;
+       
+        axios.get('https://rickandmortyapi.com/api/character?page='+ indice + '' , {
+                responseType: 'json'
+            })
+            .then(function(res) {
+                if (res.status == 200) {
+                                                                     
+                  commit('setCharacters', res.data.results)
+                  commit('setCharactersFilter', res.data.results)
+                 
+                    
+                }
+                console.log(res.data.info.prev)
+               
+            })
+            .catch(function(err) {
+                console.log(err);
+            })
+          
+    },
+    
+    previousPage({commit}){
+      
+        indice--;
+       
+        axios.get('https://rickandmortyapi.com/api/character?page='+ indice + '' , {
+                responseType: 'json'
+            })
+            .then(function(res) {
+                if (res.status == 200) {
+                                                                     
+                  commit('setCharacters', res.data.results)
+                  commit('setCharactersFilter', res.data.results)
+                 
+             
+                }
+
+                console.log(res.data.info.next)
+                
+            })
+            .catch(function(err) {
+                console.log(err);
+            })
+          
+    },
+    
+
+  
   },
   modules: {
   }

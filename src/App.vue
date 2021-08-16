@@ -4,7 +4,8 @@
  <FilterByStatus/>
  <FilterByName/>
  <ListCharacters />
- </div>
+ <Pagination />
+</div>
 
 </template>
 
@@ -13,13 +14,15 @@
 import ListCharacters from '@/components/ListCharacters'
 import FilterByStatus from '@/components/FilterByStatus'
 import FilterByName from './components/FilterByName.vue'
+import Pagination from './components/Pagination.vue'
 
 export default {
   name: 'App',
   components: {
    ListCharacters,
    FilterByStatus,
-  FilterByName
+  FilterByName,
+  Pagination
   }
 }
 </script>
@@ -54,5 +57,6 @@ h1{
 img{
   width: 100%;
 }
+
 
 </style>
